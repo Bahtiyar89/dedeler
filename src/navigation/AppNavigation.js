@@ -42,7 +42,7 @@ const AppNavigation = () => {
       >
         <Tab.Screen
           name="Cards"
-          component={HomeScreen}
+          component={YandexMap}
           options={({route}) => ({
             tabBarIcon: ({focused}) => (
               <TabBarIcon focused={focused} text={'Жизнь'} Icon={CardsIcon} />
@@ -60,7 +60,7 @@ const AppNavigation = () => {
         />
         <Tab.Screen
           name="yandex"
-          component={HomeScreen}
+          component={YandexMap}
           options={({route}) => ({
             tabBarIcon: ({focused}) => (
               <TabBarIcon focused={focused} text={'Yandex'} Icon={CardsIcon} />
@@ -84,13 +84,7 @@ const AppNavigation = () => {
         screenOptions={({route}) => ({
           tabBarShowLabel: false,
         })}>
-        <Stack.Screen
-          name="WelcomePage"
-          component={HomeScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
+        
         <Stack.Screen
           name="LoginScreen"
           component={YandexMap}
