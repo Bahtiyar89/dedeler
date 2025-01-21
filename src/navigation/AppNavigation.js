@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import YandexMap from '../screens/YandexMap';
 import TabBarIcon from './TabBarIcon';
 import {CardsIcon, SalesIcon} from '../svgs/NavigationMenuSvgs';
+import LifeStack from './LifeStack';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -21,7 +22,7 @@ const AppNavigation = () => {
         barStyle="dark-content"
       />
       <Tab.Navigator
-        initialRouteName="Cards"
+        initialRouteName="Life"
         screenOptions={({route}) => ({
           tabBarShowLabel: false,
           headerShown: false,
@@ -41,8 +42,8 @@ const AppNavigation = () => {
         // backBehavior={'order'}
       >
         <Tab.Screen
-          name="Cards"
-          component={YandexMap}
+          name="Life"
+          component={LifeStack}
           options={({route}) => ({
             tabBarIcon: ({focused}) => (
               <TabBarIcon focused={focused} text={'Жизнь'} Icon={CardsIcon} />
