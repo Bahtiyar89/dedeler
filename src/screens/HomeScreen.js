@@ -1,7 +1,15 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {View, StyleSheet, PermissionsAndroid} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  PermissionsAndroid,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
+import MinusSvg from '../svgs/MinusSvg';
+import PlusSvg from '../svgs/PlusSvg';
 
 export default function HomeScreen() {
   const [location, setLocation] = useState(null);
@@ -11,6 +19,7 @@ export default function HomeScreen() {
   const [isChoosingSource, setIsChoosingSource] = useState(false);
   const [isChoosingDestination, setIsChoosingDestination] = useState(false);
   const mapRef = useRef(null);
+  const [zoom, setZoom] = useState(15);
 
   const defaultLocation = {
     latitude: 37.78825,
@@ -83,6 +92,26 @@ export default function HomeScreen() {
     }
   };
 
+  const [selectedRegion, setSelectedRegion] = useState({
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+
+  const handleZoomInMapPress = e => {
+    mapRef?.current?.getCamera().then(cam => {
+      cam.zoom += 1;
+      mapRef?.current?.animateCamera(cam);
+    });
+  };
+  const handleZoomOutMapPress = e => {
+    mapRef?.current?.getCamera().then(cam => {
+      cam.zoom -= 1;
+      mapRef?.current?.animateCamera(cam);
+    });
+  };
+
   return (
     <View style={styles.container}>
       <MapView
@@ -120,6 +149,16 @@ export default function HomeScreen() {
           />
         )}
       </MapView>
+      <TouchableOpacity
+        style={{position: 'absolute', top: 150, right: 30}}
+        onPress={handleZoomOutMapPress}>
+        <MinusSvg />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{position: 'absolute', top: 220, right: 30}}
+        onPress={handleZoomInMapPress}>
+        <PlusSvg />
+      </TouchableOpacity>
     </View>
   );
 }
