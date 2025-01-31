@@ -13,13 +13,7 @@ import PlusSvg from '../svgs/PlusSvg';
 
 export default function HomeScreen() {
   const [location, setLocation] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [source, setSource] = useState(null);
-  const [destination, setDestination] = useState(null);
-  const [isChoosingSource, setIsChoosingSource] = useState(false);
-  const [isChoosingDestination, setIsChoosingDestination] = useState(false);
   const mapRef = useRef(null);
-  const [zoom, setZoom] = useState(15);
 
   const defaultLocation = {
     latitude: 37.78825,
@@ -37,7 +31,6 @@ export default function HomeScreen() {
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         });
-        setLoading(false);
       },
       error => {
         Alert.alert(
@@ -46,7 +39,6 @@ export default function HomeScreen() {
             ' Make sure your location is enabled.',
         );
         setLocation(defaultLocation);
-        setLoading(false);
       },
     );
   };
@@ -66,12 +58,10 @@ export default function HomeScreen() {
               'Location permission is required to show your current location on the map.',
             );
             setLocation(defaultLocation);
-            setLoading(false);
           }
         } catch (err) {
           console.warn(err);
           setLocation(defaultLocation);
-          setLoading(false);
         }
       } else {
         getCurrentLocation();
@@ -83,21 +73,7 @@ export default function HomeScreen() {
 
   const handleMapPress = e => {
     const coordinate = e?.nativeEvent?.coordinate;
-    if (isChoosingSource) {
-      setSource(coordinate);
-      setIsChoosingSource(false);
-    } else if (isChoosingDestination) {
-      setDestination(coordinate);
-      setIsChoosingDestination(false);
-    }
   };
-
-  const [selectedRegion, setSelectedRegion] = useState({
-    latitude: 37.78825,
-    longitude: -122.4324,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  });
 
   const handleZoomInMapPress = e => {
     mapRef?.current?.getCamera().then(cam => {
@@ -122,32 +98,25 @@ export default function HomeScreen() {
         onPress={handleMapPress}>
         {/* Render default markers */}
         <Marker coordinate={location} />
+
+        <Marker
+          coordinate={{
+            latitude: 41.022297,
+            longitude: 29.014352,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          }}
+        />
+        <Marker
+          coordinate={{
+            latitude: 36.844364,
+            longitude: 35.337136,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          }}
+        />
+
         {/* Render main markers */}
-        {source && (
-          <Marker
-            coordinate={source}
-            title={'Source'}
-            description={'Your source location'}
-            pinColor={'green'}
-            onPress={() => zoomToMarker(source)}
-          />
-        )}
-        {destination && (
-          <Marker
-            coordinate={destination}
-            title={'Destination'}
-            description={'Your destination location'}
-            pinColor={'blue'}
-            onPress={() => zoomToMarker(destination)}
-          />
-        )}
-        {source && destination && (
-          <Polyline
-            coordinates={[source, destination]}
-            strokeColor="#000"
-            strokeWidth={2}
-          />
-        )}
       </MapView>
       <TouchableOpacity
         style={{position: 'absolute', top: 150, right: 30}}

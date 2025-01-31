@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import HomeScreen from '../screens/HomeScreen';
+import GooglemapsScreen from '../screens/GooglemapsScreen';
 import YandexMap from '../screens/YandexMap';
 import TabBarIcon from './TabBarIcon';
 import {CardsIcon, SalesIcon} from '../svgs/NavigationMenuSvgs';
@@ -46,13 +46,13 @@ const AppNavigation = () => {
           component={LifeStack}
           options={({route}) => ({
             tabBarIcon: ({focused}) => (
-              <TabBarIcon focused={focused} text={'Жизнь'} Icon={CardsIcon} />
+              <TabBarIcon focused={focused} text={'Hayatı'} Icon={CardsIcon} />
             ),
           })}
         />
         <Tab.Screen
           name="google"
-          component={HomeScreen}
+          component={GooglemapsScreen}
           options={({route}) => ({
             tabBarIcon: ({focused}) => (
               <TabBarIcon focused={focused} text={'Google'} Icon={CardsIcon} />
@@ -73,7 +73,11 @@ const AppNavigation = () => {
           component={YandexMap}
           options={{
             tabBarIcon: ({focused}) => (
-              <TabBarIcon focused={focused} text={'о нас'} Icon={SalesIcon} />
+              <TabBarIcon
+                focused={focused}
+                text={'Biz hakda'}
+                Icon={SalesIcon}
+              />
             ),
           }}
         />
